@@ -101,7 +101,7 @@ dim(Training);dim(Testing)
 
 ### Machine Learning Algorithm
 
-#### Linear Discriminant Analysis
+ #### Linear Discriminant Analysis
 ```{r}
 Model_LDA <- train(classe ~ ., 
                    method="lda", 
@@ -113,6 +113,7 @@ Pred_LDA_Train <- predict(Model_LDA, newdata = Training)
 Outcome_LDA_Train <- confusionMatrix(Pred_LDA_Train , Training$classe)
 Outcome_LDA_Train$overall[1]
 ```
+
 #### Naive Bayes
 ```{r}
 library(klaR)
@@ -142,6 +143,22 @@ Outcome_BT_Train <- confusionMatrix(Pred_BT_Train , Training$classe)
 Outcome_BT_Train$overall[1]
 ```
 
+### Decision Tree Model
+```{r fig.width=8, fig.height = 8}
+library(rpart)
+library(rpart.plot)
+set.seed(12345)
+
+modFitDT <- rpart(classe ~ ., data = Training_Data,
+                  method="class",
+                  control = rpart.control(method = "cv",
+                                          number = 10))
+
+rpart.plot(modFitDT, main = "Classification Tree")
+
+Pre_Tree <- predict(modFitDT, Testing_Data, type = "class")
+confusionMatrix(Pre_Tree, Testing_Data$classe)
+```
 
 ####
 
