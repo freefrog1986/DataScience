@@ -17,6 +17,18 @@ This section focus on dealing with data, including Loading Data, Cleaning Data.
 
 ### 1.1 Loading Data
 
+#### load data locally
+```{r load data}
+# first set working directory
+setwd('/Users/freefrog/Studing/DataScience/Practical_ML')
+
+# read .csv file
+# !!! How to treat na values are very important!!!
+Train_Data <- read.csv('pml-training.csv',na.strings=c("", "NA", "NULL"))
+Test_Data <- read.csv('pml-testing.csv', na.strings=c("", "NA", "NULL"))
+
+dim(Train_Data);dim(Test_Data)
+```
 ### 1.2 Cleaning The Data
 In this section, we will remove variables that   
 - Have too many NA values.      
@@ -86,4 +98,57 @@ Testing = Testing[, -High_cor_var]
 dim(Training);dim(Testing)
 ```
 ## 2. Analysis
+
+### Machine Learning Algorithm
+
+#### Linear Discriminant Analysis
+```{r}
+Model_LDA <- train(classe ~ ., 
+                   method="lda", 
+                   preProcess="pca", 
+                   data=Training)
+
+Pred_LDA_Train <- predict(Model_LDA, newdata = Training)
+
+Outcome_LDA_Train <- confusionMatrix(Pred_LDA_Train , Training$classe)
+Outcome_LDA_Train$overall[1]
+```
+#### Naive Bayes
+```{r}
+library(klaR)
+# preprocess befor fit the Naive Bayes method using pca method
+Pre_Proc_Train <- preProcess(Training[,-46], method="pca", pcaComp=10)
+TrainingPC <- predict(Pre_Proc_Train, Training[,-46])
+
+Model_NB  <- NaiveBayes(Training$classe ~ ., data=TrainingPC)
+
+Pred_NB_Train <- predict(Model_NB, newdata = TrainingPC)$class
+
+Outcome_NB_Train <- confusionMatrix(Pred_NB_Train , Training$classe)
+Outcome_NB_Train$overall[1]
+```
+
+#### Gradient Boosted Tree model
+```{r}
+library(caret)
+Model_BoostTree <- train(classe ~ ., 
+                         method="gbm", 
+                         data=Training, 
+                         verbose=FALSE)
+
+Pred_BT_Train <- predict(Model_BoostTree, newdata = Training)
+
+Outcome_BT_Train <- confusionMatrix(Pred_BT_Train , Training$classe)
+Outcome_BT_Train$overall[1]
+```
+
+
+####
+
+
+
+
+
+
+
 
