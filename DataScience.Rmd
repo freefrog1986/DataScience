@@ -9,5 +9,81 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## 
+## Summary
+This is all about how to do data analysis using R.
+
+## 1. Data
+This section focus on dealing with data, including Loading Data, Cleaning Data.
+
+### 1.1 Loading Data
+
+### 1.2 Cleaning The Data
+In this section, we will remove variables that   
+- Have too many NA values.      
+- Unrelated variables.  
+- Low variance variables.
+- Highly correlated variables.
+
+#### Removing NAs
+``` {r removing NAs}
+# find all variables contain NA values
+Train_na_variables <- which(colSums(is.na(Train_Data))==0)
+Test_na_variables <- which(colSums(is.na(Test_Data))==0)
+
+# or find variables which has more than 95% NA values
+# Train_na_Variables <- sapply(Train_Data, function(x) mean(is.na(x))) > 0.95
+# Test_na_Variables <- sapply(Test_Data, function(x) mean(is.na(x))) > 0.95
+
+Training <- Train_Data[,Train_na_variables]
+Testing <- Test_Data[,Test_na_variables]
+
+dim(Training);dim(Testing)
+```
+
+#### Removing Uncorrelateed Variables
+```{r removing uncorrelateed variables}
+# find uncorrelated variables
+remove = c('X', 'user_name', 'raw_timestamp_part_1', 'raw_timestamp_part_2', 'cvtd_timestamp', 'new_window', 'num_window')
+
+Training <- Training[,-which(names(Training) %in% remove)]
+Testing <- Testing[,-which(names(Testing) %in% remove)]
+
+dim(Training);dim(Testing)
+```
+
+#### Removing Low Variance Variables
+```{r removing low variance variables}
+library(caret)
+# using nearZeroVar to get those low variance variables, this only can apply on numeric formate.
+zeroVar = nearZeroVar(Training[,sapply(Training, is.numeric)],
+                     saveMetrics = TRUE)
+
+Training = Training[,zeroVar[, 'nzv']==0]
+Testing = Testing[,zeroVar[, 'nzv']==0]
+
+dim(Training);dim(Testing)
+```
+
+#### Removing Highly Correlated Variables
+```{r}
+# using cor to get thee correlation of all numeric variables
+corrMatrix <- cor(Training[sapply(Training, is.numeric)])
+# set grid
+corrDF <- expand.grid(row = 1:dim(corrMatrix)[1], 
+                      col = 1:dim(corrMatrix)[2])
+# set data to vector so that can be plot
+corrDF$correlation <- as.vector(corrMatrix)
+# using levelplot to show the relationship between all those variables.
+levelplot(correlation ~ row+ col, corrDF)
+# find high correlated variables( >90% )
+High_cor_var = findCorrelation(corrMatrix, 
+                   cutoff = .90, 
+                   verbose = TRUE)
+
+Training = Training[, -High_cor_var]
+Testing = Testing[, -High_cor_var]
+
+dim(Training);dim(Testing)
+```
+## 2. Analysis
 
