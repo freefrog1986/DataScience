@@ -128,24 +128,27 @@ $(document).ready(function () {
 </div>
 
 
+<p><a href="https://freefrog1986.github.io/DataScience/Interactive_Map.html" class="uri">https://freefrog1986.github.io/DataScience/Interactive_Map.html</a></p>
 <div id="create-the-dataset" class="section level3">
 <h3>Create the dataset</h3>
-<p>In this script, we care about the hourse price of china’s capital city beijing and the surranding citys, all those price data come from this site: <a href="http://www.creprice.cn/naprice/funation.html" class="uri">http://www.creprice.cn/naprice/funation.html</a></p>
+<p>In this script, we care about the house price of china’s capital city beijing and the surranding citys, all those price data come from this site: <a href="http://www.creprice.cn/naprice/funation.html" class="uri">http://www.creprice.cn/naprice/funation.html</a></p>
 <pre class="r"><code>library(leaflet)
 lat &lt;- c(39.9047253699,40.9514710865,40.8244345101,38.8739745619,39.5377360138,39.0850853357,39.6304907838)
 lng &lt;- c(116.4072154982,117.9633664635,114.8875440254,115.4646082830,116.6837380445,117.1993482089,118.1805948789)
 city &lt;- c('beijing','chengde','zhangjiakou','baoding','langfang','tianjin','tanshan')
 price &lt;- c(66165,8825,9346,11550,21571,26256,7089)
 
-df &lt;- data.frame(lat=lat,lng=lng,city = city, price = price)
-
-df %&gt;%
+df &lt;- data.frame(lat=lat,lng=lng,city = city, price = price)</code></pre>
+</div>
+<div id="plot-the-house-price-in-the-interactiv-map-using-leaflet." class="section level3">
+<h3>Plot the house price in the Interactiv map using leaflet.</h3>
+<pre class="r"><code>df %&gt;%
         leaflet() %&gt;%
         addTiles() %&gt;%
-        addMarkers()</code></pre>
+        addCircles(radius=df$price,weight=3)</code></pre>
 <pre><code>## Assuming 'lng' and 'lat' are longitude and latitude, respectively</code></pre>
-<div id="htmlwidget-2572529fe8473f255f66" style="width:672px;height:480px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2572529fe8473f255f66">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[39.9047253699,40.9514710865,40.8244345101,38.8739745619,39.5377360138,39.0850853357,39.6304907838],[116.4072154982,117.9633664635,114.8875440254,115.464608283,116.6837380445,117.1993482089,118.1805948789],null,null,null,{"clickable":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},null,null,null,null,null,null,null]}],"limits":{"lat":[38.8739745619,40.9514710865],"lng":[114.8875440254,118.1805948789]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8a178f9ca5ceab746fa3" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8a178f9ca5ceab746fa3">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"maxNativeZoom":null,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"continuousWorld":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addCircles","args":[[39.9047253699,40.9514710865,40.8244345101,38.8739745619,39.5377360138,39.0850853357,39.6304907838],[116.4072154982,117.9633664635,114.8875440254,115.464608283,116.6837380445,117.1993482089,118.1805948789],[66165,8825,9346,11550,21571,26256,7089],null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#03F","weight":3,"opacity":0.5,"fill":true,"fillColor":"#03F","fillOpacity":0.2,"dashArray":null},null,null,null,null,null,null]}],"limits":{"lat":[38.8739745619,40.9514710865],"lng":[114.8875440254,118.1805948789]}},"evals":[],"jsHooks":[]}</script>
 </div>
 
 
