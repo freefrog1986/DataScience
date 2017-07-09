@@ -160,7 +160,20 @@ Pre_Tree <- predict(modFitDT, Testing_Data, type = "class")
 confusionMatrix(Pre_Tree, Testing_Data$classe)
 ```
 
-####
+## Building an R package
+
+### Create a new directory with R/ and man/ sub-directory
+`package.skeleton()`
+
+### Write a DESCRIPTION file
+
+### Copy R code into the R/ sub-directory
+
+### Write R documentation files in man/ sub-directory
+
+### Write a NAMESPACE file with exports/imports
+
+### Build and Check
 
 
 

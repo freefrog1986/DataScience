@@ -1,0 +1,4 @@
+```{r}
+library(plotly)
+plot_ly(mtcars, x=~wt, y=~mpg, mode = 'markers',color = as.factor(mtcars$cyl),size=mtcars$hp)
+```
