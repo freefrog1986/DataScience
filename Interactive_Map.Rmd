@@ -1,5 +1,7 @@
-
-https://freefrog1986.github.io/DataScience/Interactive_Map.html
+# Title: Interactive Map
+  
+  Author: Bo Liu   
+  Date: 12-Jul-2017
 
 ### Create the dataset
  In this script, we care about the house price of china's capital city beijing and the surranding citys, all those price data come from this site: http://www.creprice.cn/naprice/funation.html
