@@ -11,6 +11,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Summary
 This is all about how to do data analysis using R.
+steps:
+1. Understanding the problem
+        The first step in analyzing any new data set is figuring out: (a) what data you have and (b) what are the standard tools and models used for that type of data.
+2. Data acquisition and cleaning
+        getting data
+3. Exploratory analysis
+4. Statistical modeling
+5. Predictive modeling
+6. Creative exploration
+7. Creating a data product
+8. Creating a short slide deck pitching your product
 
 ## 1. Data
 This section focus on dealing with data, including Loading Data, Cleaning Data.
@@ -21,6 +32,13 @@ This section focus on dealing with data, including Loading Data, Cleaning Data.
 ```{r load data}
 # first set working directory
 setwd('/Users/freefrog/Studing/DataScience/Practical_ML')
+rm(list = ls()) # remove all variabls in the eviroment
+
+# downloading files
+url <- 'https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip'
+localfile <- file.path(getwd(),'original_file')
+download.file(url, localfile)
+unzip(localfile)
 
 # read .csv file
 # !!! How to treat na values are very important!!!
